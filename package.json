@@ -7,7 +7,9 @@
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "cd frontend && npm start && cd ..",
     "start:backend": "cd backend && node server.js",
-    "build": "echo 'Building the project...'",
+    "build": "concurrently \"npm run build:frontend\" \"npm run build:backend\"",
+    "build:frontend": "cd frontend && npm run build && cd ..",  
+    "build:backend": "echo 'No build step needed for backend' && cd backend",  
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Your Name",
