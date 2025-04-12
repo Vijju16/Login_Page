@@ -1,0 +1,50 @@
+.medical-records-container {
+    position: relative;
+    top: 150px;
+    padding: 0px;
+    background: white; /* Light teal to soft pink */
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .medical-records-container h1 {
+    color: #00695c; /* Deep teal (Carefree brand tone) */
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .medical-records-container p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .medical-records-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .medical-records-table th {
+    background-color: #80cbc4; /* Soft mint-teal */
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  .medical-records-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 15px;
+    color: #333;
+  }
+  
+  .medical-records-table tr:hover {
+    background-color: #f1f8e9; /* very soft green */
+    transition: 0.3s ease-in-out;
+  }
+  

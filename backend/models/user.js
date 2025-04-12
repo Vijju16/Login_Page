@@ -1,53 +1,67 @@
 const mongoose = require('mongoose');
-/*const bcrypt = require('bcryptjs'); // For hashing passwords*/
 
-const UserSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
-    name: {
+    userType: {
+      type: String,
+      enum: ['patient', 'doctor'],
+      required: true
+    },
+    fullname: {
       type: String,
       required: true,
       minlength: 2,
-      maxlength: 50,
-      trim: true, // Removes extra spaces
+      maxlength: 100,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true, // Ensures emails are stored in lowercase
-      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Email validation regex
+      lowercase: true,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
     password: {
       type: String,
       required: true,
       minlength: 8,
       maxlength: 128,
-      select: true, // Excludes password by default in queries
+      select: true,
     },
-    gender: {
+
+    // Patient-specific fields
+    dob: { type: Date },
+    gender: { type: String, enum: ['Male', 'Female', 'Other'] },
+    primaryContact: {
       type: String,
-      required: true,
-      enum: ['Male', 'Female', 'Other'],
+      match: /^[0-9]{10}$/,
     },
-    address: {
+    street: { type: String, trim: true },
+    city: { type: String, trim: true },
+    state: { type: String, trim: true },
+    zipCode: {
       type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 100,
-      trim: true,
+      match: /^[1-9]{1}[0-9]{5}$/,
     },
-    age: {
-      type: Number,
-      required: true,
-      min: 18, // Minimum age requirement
-      max: 100, // Maximum age limit
-    },
-    number: {
+    nationalId: { type: String, minlength: 5, maxlength: 50 },
+    insuranceProvider: { type: String },
+    insurancePolicy: {
       type: String,
-      required: true,
-      unique: true,
-      match: /^\+?[1-9]\d{1,14}$/, // Matches E.164 phone number format
+      match: /^[A-Za-z0-9\-]+$/,
     },
+    preferredLanguage: { type: String },
+    communicationPreference: {
+      type: String,
+      enum: ['Email', 'Phone', 'Text'],
+    },
+
+    // Doctor-specific fields
+    specialization: { type: String },
+    experience: { type: Number },
+    licenseNumber: { type: String },
+    clinicAddress: { type: String },
+
+    // Shared fields
     resetPasswordToken: { type: String },
     resetPasswordExpiresAt: { type: Date },
     verificationToken: { type: String },
@@ -55,26 +69,7 @@ const UserSchema = new mongoose.Schema(
     otp: { type: String },
     otpExpiresAt: { type: Date },
   },
-  { collection: 'User', timestamps: true } // Adds createdAt and updatedAt fields
+  { collection: 'User', timestamps: true }
 );
 
-/*// Hash password before saving the user
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next(); // Only hash if the password is new/modified
-
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt); // Hash the password
-    next();
-  } catch (err) {
-    next(err); // Pass error to the next middleware
-  }
-});
-
-// Compare password method
-UserSchema.methods.comparePassword = async function (enteredPassword) {
-  return bcrypt.compare(enteredPassword, this.password);
-};*/
-
-// Export the User model
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', userSchema);

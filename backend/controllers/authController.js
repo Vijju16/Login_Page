@@ -1,146 +1,195 @@
-const User = require('../models/user'); // Ensure the correct model is imported
+const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const app = express();
-const nodemailer = require('nodemailer')
-/*const sgMail = require('@sendgrid/mail');*/
+const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const generateTokenAndSetCookie = require('../utils/generateTokenAndSetCookie');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 dotenv.config();
-/*sgMail.setApiKey(process.env.SENDGRID_API_KEY,process.env.API_KEY_SID);*/
 
-// Middleware to parse JSON request body
 app.use(express.json());
 
-// Login functionality
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, userType } = req.body;
 
   try {
-    // Validate input
-    if (!email || !password) {
-      return res.status(400).send('Email and password are required.');
+    if (!email || !password || !userType) {
+      return res.status(400).send('Email, password, and user type are required.');
     }
 
-    // Find user by email
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).send('User not found.');
-    }
+    // Find the user with matching email and userType
+    const user = await User.findOne({ email, userType }).select('+password');
+    if (!user) return res.status(400).send('User not found.');
 
-    // Verify password
-    console.log("Comparing passwords...");
-    console.log("Plaintext password:", password);
-    console.log("Hashed password from DB:", user.password);
-
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).send('Invalid credentials.');
-    }
+    if (!isMatch) return res.status(400).send('Invalid credentials.');
 
-    // Generate JWT
-    const token = jwt.sign({ id: user._id }, 'secretKey', { expiresIn: '1h' });
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id, userType: user.userType }, 'secretKey', { expiresIn: '1h' });
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
-    console.error("Error during login:", err.message || err);
+    console.error("Error during login:", err);
     res.status(500).json({ error: err.message || "Server error" });
   }
 };
 
-// Register functionality
 exports.register = async (req, res) => {
-
-  const session = await mongoose.startSession(); // Start a session
-  session.startTransaction(); // Start a transaction
-
-  const { name, email, password, gender, address, age, number } = req.body;
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   try {
-    // Validate input
-    if (!name || !email || !password || !gender || !address || !age || !number) {
-      return res.status(400).send('All fields are required.');
+    const {
+      userType,
+      fullname,
+      email,
+      password,
+      dob,
+      gender,
+      primaryContact,
+      street,
+      city,
+      state,
+      zipCode,
+      nationalId,
+      insuranceProvider,
+      insurancePolicy,
+      preferredLanguage,
+      communicationPreference,
+      specialization,
+      experience,
+      licenseNumber,
+      clinicAddress
+    } = req.body;
+
+    // Common required fields
+    if (!userType || !fullname || !email || !password) {
+      return res.status(400).send('Missing required fields');
     }
 
-    // Check if the user already exists
-    const userExists = await User.findOne({ email });
-    console.log("userExists", userExists);
-    if (userExists) {
-      return res.status(400).send('User already exists.');
+    // Validate specific fields based on userType
+    if (userType === 'patient') {
+      const requiredFields = [dob, gender, primaryContact, street, city, state, zipCode, nationalId];
+      if (requiredFields.some(field => !field)) {
+        return res.status(400).send('Missing required patient fields');
+      }
+    } else if (userType === 'doctor') {
+      const requiredFields = [specialization, experience, licenseNumber, clinicAddress];
+      if (requiredFields.some(field => !field)) {
+        return res.status(400).send('Missing required doctor fields');
+      }
+    } else {
+      return res.status(400).send('Invalid user type');
     }
 
-    // Hash the password
-    const salt = await bcrypt.genSalt(10); // Generate a salt
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // Check for existing user
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).send('User already exists.');
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // Create a new user
-    const newUser = new User({
-      name,
+    // Create user object based on userType
+    const newUserData = {
+      userType,
+      fullname,
       email,
-      password: hashedPassword, // Store the hashed password
-      gender,
-      address,
-      age,
-      number,
+      password: hashedPassword,
       verificationToken,
-      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000 //24 hours
-    });
+      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
+    };
 
-    // Save the user to the database
+    if (userType === 'patient') {
+      Object.assign(newUserData, {
+        dob,
+        gender,
+        primaryContact,
+        street,
+        city,
+        state,
+        zipCode,
+        nationalId,
+        insuranceProvider,
+        insurancePolicy,
+        preferredLanguage,
+        communicationPreference
+      });
+    }
+
+    if (userType === 'doctor') {
+      Object.assign(newUserData, {
+        specialization,
+        experience,
+        licenseNumber,
+        clinicAddress
+      });
+    }
+
+    // Save to DB
+    const newUser = new User(newUserData);
     await newUser.save({ session });
-
-    //jwt
     generateTokenAndSetCookie(res, newUser._id);
-
-    // Commit the transaction
     await session.commitTransaction();
-    session.endSession();
 
-    res.status(201).json({
-      success: true,
-      message: 'User registered successfully',
-      user: {
-        ...newUser._doc,
-        password: undefined
-      },
-    });
+    res.status(201).json({ success: true, message: 'User registered successfully' });
   } catch (err) {
-    // Abort the transaction if any error occurs
     await session.abortTransaction();
-    session.endSession();
-
-    console.error("Error during registration:", err.message || err);
+    console.error('Error during registration:', err);
     res.status(500).send('Server error');
+  } finally {
+    session.endSession();
   }
 };
 
-//send otp to email before reset pasword
+exports.getDepartments = async (req, res) => {
+  try {
+    const departments = await User.distinct('specialization', {
+      userType: 'doctor',
+      specialization: { $ne: null },
+    });
+    res.status(200).json({ success: true, data: departments });
+  } catch (error) {
+    console.error('Error fetching departments:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch departments' });
+  }
+};
+
+exports.getDoctorsByDepartment = async (req, res) => {
+  const { department } = req.query;
+
+  if (!department) {
+    return res.status(400).json({ success: false, message: 'Department (specialization) is required' });
+  }
+
+  try {
+    const doctors = await User.find({
+      userType: 'doctor',
+      specialization: { $regex: new RegExp(`^${department}$`, 'i') }
+    }).select('_id fullname specialization experience clinicAddress');
+
+    res.status(200).json({ success: true, data: doctors });
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch doctors' });
+  }
+};
+
 exports.sendOtp = async (req, res) => {
   const { email } = req.body;
 
   try {
-    // Validate email
-    if (!email) {
-      return res.status(400).send("Email is required");
-    }
-
-    // Find the user by email
+    if (!email) return res.status(400).send("Email is required");
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).send('User not found.');
-    }
+    if (!user) return res.status(400).send('User not found.');
 
-    // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpiresAt = Date.now() + 15 * 60 * 1000; // OTP valid for 15 minutes
-
-    // Save OTP to the user record in the database
     user.otp = otp;
-    user.otpExpiresAt = otpExpiresAt;
+    user.otpExpiresAt = Date.now() + 15 * 60 * 1000;
     await user.save();
 
     const transporter = nodemailer.createTransport({
@@ -155,130 +204,79 @@ exports.sendOtp = async (req, res) => {
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         refreshToken: process.env.OAUTH_REFRESH_TOKEN,
       },
-      debug: true, // Enable debug output
-      logger: true, // Log information to console
     });
-    
-  
-  // Mail options
-  const mailOptions = {
-    from: 'vd755033@gmail.com', // Ensure this email matches the OAuth2 settings
-    to: 'vp755033@gmail.com',   // Recipient's email
-    subject: 'Nodemailer Project',
-    text: `Your OTP code is ${otp}. It will expire in 15 minutes.`,
-    html: `<p>Your OTP code is <strong>${otp}</strong>. It will expire in 15 minutes.</p>`
-  };
-  
-  // Send the email
-  transporter.sendMail(mailOptions, function (err, data) {
-    if (err) {
-      console.log('Error:', err);
-    } else {
-      console.log('Email sent successfully');
-    }
-  });
-    // Prepare the email content
-    /*const msg = {
-      to: email, // Recipient's email
-      from: 'vp755033@gmail.com', // Your verified sender email
-      subject: 'Your OTP Code',
-      text: `Your OTP code is ${otp}. It will expire in 15 minutes.`,
-      html: `<p>Your OTP code is <strong>${otp}</strong>. It will expire in 15 minutes.</p>`,
-    };
 
-    // Send the email using SendGrid
-    await sgMail.send(msg);*/
+    await transporter.sendMail({
+      from: 'Carefree.com',
+      to: email,
+      subject: 'OTP Verification',
+      html: `<p>Your OTP is <strong>${otp}</strong>. Valid for 15 minutes.</p>`
+    });
 
-    res.status(200).json({message:'OTP sent to your email.'});
+    res.status(200).json({ message: 'OTP sent to your email.' });
   } catch (err) {
-    console.error('Error sending OTP:', err.message || err);
-    res.status(500).json({error:'Server error'});
+    console.error('Error sending OTP:', err);
+    res.status(500).json({ error: 'Server error' });
   }
 };
-//verify OTP and allow password reset
+
 exports.verifyOtp = async (req, res) => {
-  console.log('Request body:', req.body); // Log request body to debug
   const { email, otp } = req.body;
 
   try {
-    //validate inputs
-    if (!email || !otp) {
-      return res.status(400).send('Email and OTP are Required.');
-    }
-
-    //find the user by email
+    if (!email || !otp) return res.status(400).send('Email and OTP are required.');
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).send('User not found.');
-    }
-
-    //check if OTP exists and is not expired
-    if (user.otp !== otp || Date.now() > user.otpExpiresAt) {
+    if (!user || user.otp !== otp || Date.now() > user.otpExpiresAt) {
       return res.status(400).send('Invalid or expired OTP.');
     }
 
-    //clear OTP after after successful verification
     user.otp = null;
     user.otpExpiresAt = null;
     await user.save();
 
-    res.status(200).json({message: 'OTP verified. Redirecting to reset password page.', redirect: '/reset-password'});
+    res.status(200).json({ message: 'OTP verified.', redirect: '/reset-password' });
   } catch (err) {
-    console.error('Error verifying OTP:', err.message || err);
+    console.error('Error verifying OTP:', err);
     res.status(500).send('Server error');
   }
 };
-// Reset password functionality
+
 exports.resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;
 
   try {
-    // Validate input
-    if (!email || !newPassword) {
-      return res.status(400).send('Email and new password are required.');
-    }
-
-    // Find user by email
+    if (!email || !newPassword) return res.status(400).send('Email and new password are required.');
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).send('User not found.');
-    }
+    if (!user) return res.status(400).send('User not found.');
 
-    // Hash the new password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    // Update the user's password
-    user.password = hashedPassword;
+    user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 
     res.status(200).json({ message: 'Password reset successful' });
   } catch (err) {
-    console.error("Error during password reset:", err.message || err);
+    console.error("Error during password reset:", err);
     res.status(500).send('Server error');
   }
 };
 
-// Get user data functionality
 exports.getUser = async (req, res) => {
   try {
-    // Find user by ID from token payload
     const user = await User.findById(req.user.id);
-    if (!user) {
-      return res.status(400).send('User not found.');
-    }
+    if (!user) return res.status(400).send('User not found.');
 
-    // Send user data (excluding sensitive fields like password)
-    res.status(200).json({
-      name: user.name,
-      email: user.email,
-      gender: user.gender,
-      address: user.address,
-      age: user.age,
-      number: user.number,
-    });
+    res.status(200).json(user);
   } catch (err) {
-    console.error("Error during fetching user data:", err.message || err);
+    console.error("Error fetching user:", err);
     res.status(500).send('Server error');
+  }
+};
+
+exports.getAllpatient = async (req, res) => {
+  try {
+    const users = await User.find({ userType: 'patient' });
+    res.status(200).json({ success: true, data: users });
+  } catch (err) {
+    console.error("Error fetching patients:", err);
+    res.status(500).json({ success: false, message: 'Error fetching patient details', error: err.message });
   }
 };

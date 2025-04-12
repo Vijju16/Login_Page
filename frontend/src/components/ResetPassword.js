@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { handleError, handleSuccess } from '../utils/notifications';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import './resetpassword.css'
 
 function ResetPassword() {
   const [passwordInfo, setPasswordInfo] = useState({
@@ -39,7 +40,7 @@ function ResetPassword() {
   };
 
   return (
-    <div className="container">
+    <div className="container3">
       <h1>Reset Password</h1>
       <form onSubmit={handleReset}>
         <div>

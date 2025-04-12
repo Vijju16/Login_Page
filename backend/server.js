@@ -11,4 +11,4 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use('/api/auth', authRoutes);
 
-app.listen(5000, () => console.log('Server running on http://localhost:5000'));
+app.listen(5000, () => console.log('✅ Server running on http://localhost:5000'));

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils/notifications";
 import { useNavigate } from "react-router-dom";
+import './SendOtp.css';
+
 
 function SendOtp() {
     const [email, setEmail] = useState('');
@@ -34,17 +36,17 @@ function SendOtp() {
     };
 
     return (
-        <div className="container">
+        <div className="send-otp-container">
             <h1>Send OTP</h1>
             <form onSubmit={handleSendOtp}>
                 <div>
                     <label>Email</label>
                     <input 
-                    typeof="email"
-                    name="email"
-                    value={email}
-                    onChange={handleChange}
-                    required
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={handleChange}
+                        required
                     />
                 </div>
                 <button type="submit">Send OTP</button>

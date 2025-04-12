@@ -1,0 +1,72 @@
+.doctor-dashboard {
+    padding: 40px;
+    position: relative;
+    top: 50px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    color: #00796B;
+    margin-bottom: 10px;
+  }
+  
+  .subheading {
+    font-size: 1.1rem;
+    color: #666;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  
+  .dashboard-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .dashboard-card h3 {
+    color: #004D40;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .dashboard-card p {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+  
+  .dashboard-card button {
+    padding: 10px 16px;
+    background-color: #00796B;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-card button:hover {
+    background-color: #009688;
+  }
+  

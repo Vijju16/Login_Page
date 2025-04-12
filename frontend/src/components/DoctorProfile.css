@@ -1,0 +1,73 @@
+.doctor-profile-container {
+    max-width: 900px;
+    position: relative;
+    top: 50px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #f9fcff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 121, 107, 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .profile-heading {
+    color: #00796B;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #d8eaf0;
+  }
+  
+  .profile-section {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
+  
+  .profile-section:last-child {
+    border-bottom: none;
+  }
+  
+  .profile-section h2 {
+    color: #00796B;
+    margin-bottom: 12px;
+    font-size: 20px;
+  }
+  
+  .profile-section p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .profile-section strong {
+    color: #00574B;
+  }
+  .profile-buttons {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .back-button {
+    background-color: #00796B;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #009688;
+    color: #fff;
+  }
+    

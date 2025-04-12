@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils/notifications";
 import { useNavigate } from "react-router-dom";
+import './VerifyOtp.css';
+
 
 function VerifyOtp() {
     const [otpInfo, setOtpInfo] = useState({
@@ -44,7 +46,7 @@ function VerifyOtp() {
     };
 
     return (
-        <div className="container">
+        <div className="container5">
             <h1>Verify OTP</h1>
             <form onSubmit={handleVerifyOtp}>
                 <div>

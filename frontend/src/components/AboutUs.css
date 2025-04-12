@@ -1,0 +1,45 @@
+/* AboutUs.css */
+
+.about-container {
+  position: relative;
+  top: 50px;
+  background: #ffffff; /* White background */
+  color: #00BFA6; /* CareFree Green for text accents */
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about-container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #00BFA6; /* Heading in CareFree Green */
+}
+
+.about-container p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #333333; /* Dark text for readability */
+}
+
+.about-container p:nth-child(3) {
+  margin-top: 1rem;
+  color: #555555; /* Slightly muted for contrast */
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    padding: 1.5rem;
+  }
+
+  .about-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .about-container p {
+    font-size: 1rem;
+  }
+}

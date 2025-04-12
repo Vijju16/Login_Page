@@ -1,94 +1,95 @@
-/* General container styling */
+/* General Page Styling */
 .container {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #eaf2f8;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  top: 80px;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Greeting & Welcome Message */
+h1 {
+  font-size: 26px;
+  color: #008080; /* Carefree Teal */
+  margin-bottom: 15px;
+}
+
+/* User Info Styling */
+.user-info {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.user-info span {
+  font-weight: bold;
+  color: #222;
+}
+
+/* Loading Message */
+.loading-message {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Button Styling */
+button {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Logout Button */
+.btn-logout {
+  background-color: #e63946;
+  color: white;
+  margin-top: 20px;
+}
+
+.btn-logout:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+/* Patients Button */
+.button-group {
+  margin-top: 20px;
+}
+
+.btn-patients {
+  background-color: #008080; /* Carefree Teal */
+  color: white;
+}
+
+.btn-patients:hover {
+  background-color: #006666;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    padding: 15px;
   }
-  
-  /* Title styling */
+
   h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #007bff; /* Soft blue, healthcare friendly */
-    margin-bottom: 20px;
+    font-size: 22px;
   }
-  
-  /* User information section */
+
   .user-info {
-    text-align: center;
-    font-size: 1.25rem;
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 16px;
   }
-  
-  /* User email display */
-  .user-info p {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  /* Buttons styling */
+
   button {
-    display: inline-block;
-    background-color: #28a745; /* Healthcare green */
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    padding: 10px 14px;
   }
-  
-  /* Hover effect for buttons */
-  button:hover {
-    background-color: #218838; /* Slightly darker green */
-  }
-  
-  /* Layout for buttons (spacing between buttons) */
-  button + button {
-    margin-left: 15px;
-  }
-  
-  /* Logout button styling */
-  button.logout {
-    background-color: #dc3545; /* Red for logout */
-  }
-  
-  button.logout:hover {
-    background-color: #c82333;
-  }
-  
-  /* Loading message styling */
-  .loading-message {
-    font-size: 1.1rem;
-    color: #6c757d;
-    text-align: center;
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 600px) {
-    .container {
-      padding: 20px;
-    }
-  
-    h1 {
-      font-size: 2rem;
-    }
-  
-    button {
-      width: 100%;
-      margin: 10px 0;
-    }
-  
-    .user-info {
-      font-size: 1rem;
-    }
-  }
-  
+}

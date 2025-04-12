@@ -1,76 +1,154 @@
-/* General container styling */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f7f9fc;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  /* Heading style */
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #004d99;
-  }
-  
-  /* Form styling */
-  form {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Input field styling */
-  form label {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
-  form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
-  }
-  
-  form input:focus {
-    border-color: #007bff;
-  }
-  
-  /* Button styling */
-  form button {
-    padding: 12px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  form button:hover {
-    background-color: #0056b3;
-    color: ghostwhite;
-  }
-  
-  /* Toast container alignment */
-  .Toastify__toast-container {
-    margin-top: 20px;
-  }
-  
+/* Full page container */
+.vic {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #e7f5f8; /* light teal background */
+  min-height: 100vh;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Form container */
+.rcontainer {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 100px 40px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  overflow-y: auto;
+  max-height: 100%;
+  margin: auto;
+}
+
+/* Heading */
+.rcontainer h1 {
+  text-align: center;
+  color: #00bfa6; /* CareFree green */
+  margin-bottom: 25px;
+}
+
+/* Form layout */
+.rcontainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Label styling */
+label {
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #00857c; /* darker CareFree teal */
+}
+
+/* Input and Select styling */
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #00bfa6;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 191, 166, 0.2);
+}
+
+/* Checkbox section */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Two-column group */
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-group div {
+  flex: 1 1 45%;
+}
+
+/* Button Styling */
+.button,
+.btn-register,
+.step-buttons button {
+  padding: 12px;
+  background-color: #00bfa6;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover,
+.btn-register:hover,
+.step-buttons button:hover {
+  background-color: #00857c;
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.footer-text {
+  font-size: 13px;
+  color: #777;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Small select */
+.sez {
+  width: 100%;
+  height: 40px;
+  color: black;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+/* Error input */
+.input-error {
+  border-color: #e53935 !important;
+  background-color: #fff6f6;
+}
+
+.error-text {
+  color: #e53935;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Role toggle */
+.role-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Step buttons */
+.step-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

@@ -1,0 +1,75 @@
+.appointments-container {
+  position: relative;
+  padding-top: 130px;
+  max-width: 600px;
+  margin: auto;
+  padding-bottom: 50px;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+  color: #048ABF; /* Blue from the logo */
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.appointment-form input {
+  padding: 10px;
+  border: 1px solid #72C6A2; /* Light Green from the logo */
+  border-radius: 5px;
+}
+
+.appointment-form button {
+  background-color: #048ABF; /* Blue from the logo */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.appointment-form button:hover {
+  background-color: #037A9E; /* Slightly darker blue */
+}
+
+.appointment-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.appointment-list li {
+  background: #D1F2E1; /* Light Green Tint */
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upcoming {
+  border-left: 5px solid #048ABF; /* Blue from the logo */
+}
+
+.completed {
+  border-left: 5px solid #2DAD53; /* Green from the logo */
+  color: #6c757d;
+}
+
+.cancel-btn {
+  background: #E63946; /* Red remains the same */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancel-btn:hover {
+  background: #C82333; /* Slightly darker red */
+}

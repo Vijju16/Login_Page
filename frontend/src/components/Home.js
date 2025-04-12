@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './home.css'
+import './home.css';
 
 function Home() {
   const [userData, setUserData] = useState(null);
+  const [greeting, setGreeting] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +19,6 @@ function Home() {
     // Fetch user data from your API using the token (you can customize the route and response)
     const fetchUserData = async () => {
       try {
-    
         const response = await fetch('http://localhost:5000/api/auth/user', {
           method: 'GET',
           headers: {
@@ -26,17 +26,18 @@ function Home() {
             'Content-Type': 'application/json',
           },
         });
-    
+
         if (!response.ok) throw new Error(await response.text());
-    
+
         const data = await response.json();
         setUserData(data);  // Set the user data in the state
+        setGreeting(getCurrentGreeting(data.name));  // Set greeting based on user name
       } catch (error) {
         console.error('Failed to fetch user data', error);
         navigate('/login')
       }
-    };    
-    
+    };
+
     fetchUserData();
   }, [navigate]);
 
@@ -45,24 +46,38 @@ function Home() {
     navigate('/');  // Redirect to the login page
   };
 
+  const getCurrentGreeting = (name) => {
+    const hours = new Date().getHours();
+    let greetingMessage = '';
+
+    if (hours < 12) {
+      greetingMessage = `Good Morning, ${name}!`;
+    } else if (hours < 18) {
+      greetingMessage = `Good Afternoon, ${name}!`;
+    } else {
+      greetingMessage = `Good Evening, ${name}!`;
+    }
+
+    return greetingMessage;
+  };
+
   return (
-    <div className="container">
-      <h1>Welcome to the Home Page</h1>
-      
+    <div className="home-container">
+      <h1>{greeting || 'Welcome to the Home Page'}</h1>
+
       {/* If user data is available, display user information */}
       {userData ? (
         <>
-          <p>Hello, {userData.email}</p>  {/* Display user's email or any other data */}
-          <button onClick={handleLogout}>Logout</button>
+          <p className="user-info">Hello, <span>{userData.email}</span></p>  {/* Display user's email or any other data */}
+          <button className="btn-logout" onClick={handleLogout}>Logout</button>
         </>
       ) : (
-        <p>Loading user data...</p>  // Display loading message if user data is not loaded
+        <p className="loading-message">Loading user data...</p>  // Display loading message if user data is not loaded
       )}
 
-      {/* Navigation to login and register pages */}
-      <div>
-        <button onClick={() => navigate('/login')}>Go to Login</button>
-        <button onClick={() => navigate('/register')}>Go to Register</button>
+      {/* Navigation to other pages */}
+      <div className="button-group">
+        <button className="btn-patients" onClick={() => navigate('/getAllpatient')}>Patients</button>
       </div>
     </div>
   );

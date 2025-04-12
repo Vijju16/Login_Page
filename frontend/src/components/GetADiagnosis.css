@@ -1,0 +1,52 @@
+.diagnosis-container {
+    max-width: 900px;
+    position: relative;
+    top: 50px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 191, 166, 0.08);
+  }
+  
+  .diagnosis-title {
+    color: #00BFA6;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .diagnosis-text {
+    color: #37474F;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .diagnosis-steps {
+    list-style-type: decimal;
+    padding-left: 2rem;
+    font-size: 1rem;
+    color: #546E7A;
+    margin-bottom: 2rem;
+  }
+  
+  .diagnosis-button {
+    display: block;
+    margin: 0 auto;
+    background-color: #00BFA6;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .diagnosis-button:hover {
+    background-color: #009f8a;
+  }
+  

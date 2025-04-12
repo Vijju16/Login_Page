@@ -1,0 +1,140 @@
+/* Footer Styling */
+.footer {
+  position: relative;
+  bottom: 0px;
+  background: linear-gradient(135deg, #037bab, #025c78); /* Updated to match blue tones from logo */
+  color: white;
+  width: 100%;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+.footer:hover {
+  background: linear-gradient(135deg, #036c8c, #025771);
+}
+
+.foot-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: left;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.foot-section {
+  flex: 1;
+  min-width: 180px;
+  margin-bottom: 20px;
+}
+
+.foot-section h4 {
+  font-size: 16px;
+  color: white; /* Updated blue shade */
+  margin-bottom: 12px;
+}
+.foot-section h4:hover {
+  text-decoration: rgb(3, 253, 3) underline;
+  color: ghostwhite;
+  transform: scale(1.1);
+}
+
+.foot-section ul {
+  list-style: none;
+  padding: 0;
+}
+.foot-section li:hover {
+  color: #05A7D9;
+}
+
+.inso {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  left: 13px;
+  top: 0px;
+  width: 70px;
+  height: 40px;
+  row-gap: 500px;
+  font-size: 18px;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.inso:hover {
+  transform: scale(1.2);
+}
+
+.log-section {
+  display: flex;
+}
+
+.log {
+  position: relative;
+  top: -20px;
+  left: -60px;
+  height: 80px;
+  width: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.social-icons {
+  gap: 10px;
+}
+
+.fab {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  left: 13px;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  background-color: transparent;
+  color: #05A7D9;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.fab:hover {
+  transform: scale(1.2);
+}
+
+.footer-bottom p {
+  text-align: center;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  font-size: 18px;
+  color: white;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  color: white;
+  margin-top: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: none;
+}
+.footer a,
+.footer a:visited,
+.footer a:hover,
+.footer a:active {
+  color: white;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  color: #05A7D9; /* Optional hover color */
+}
+
+
+.footer-links span:hover {
+  text-decoration: underline;
+}

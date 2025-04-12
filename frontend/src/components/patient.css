@@ -1,0 +1,105 @@
+/* Patient Data Page Styles */
+.patient-data-page {
+  max-width: 1200px;
+  margin: 30px auto;
+  margin: 10vmax;
+  background-color: transparent;
+  border-radius: 20px; /* More rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle deeper shadow for more depth */
+  overflow-x: scroll;
+  border-top: 4px solid #0095DA; /* Carefree Blue accent line on top */
+}
+  
+/* Header styling */
+.patient-data-page .patient-data-container h1 {
+  position: relative;
+  top: 10px;
+  text-align: center;
+  color: #0078B0; /* Carefree Blue */
+  font-size: 2.2rem; /* Larger heading for better impact */
+  margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: 1px; /* Slight letter spacing for elegance */
+}
+
+/* Table styling */
+.patient-data-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+.patient-data-page thead {
+  background-color: #0095DA; /* Carefree Blue */
+  color: #ffffff;
+  text-transform: uppercase; /* Uppercase for better readability */
+}
+
+.patient-data-page th, 
+.patient-data-page td {
+  padding: 15px 20px; /* Add more space for clarity */
+  border: 1px solid #33A353; /* Carefree Green border */
+  font-size: 1rem;
+  font-weight: 500; /* Slightly lighter text for readability */
+}
+
+.patient-data-page th {
+  text-align: center; /* Ensure header text is centered */
+}
+
+.patient-data-page tbody tr:hover {
+  background-color: #33A353; /* Carefree Green on hover */
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.patient-data-page tbody tr td {
+  border-top: 2px solid #33A353; /* Carefree Green border for separation */
+}
+
+/* Loading and error styles */
+.patient-data-page .loading, 
+.patient-data-page .error, 
+.patient-data-page .no-data {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+.patient-data-page .loading {
+  color: #0095DA; /* Carefree Blue for loading */
+  font-weight: 600;
+}
+
+.patient-data-page .error {
+  color: #33A353; /* Carefree Green instead of red */
+  font-weight: 600;
+}
+
+.patient-data-page .no-data {
+  color: #66C285;
+  font-weight: 400;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .patient-data-page table {
+    font-size: 0.9rem;
+  }
+
+  .patient-data-page th, 
+  .patient-data-page td {
+    padding: 10px 12px;
+  }
+
+  .patient-data-page .patient-data-container {
+    padding: 20px;
+  }
+
+  .patient-data-page .patient-data-container h1 {
+    font-size: 1.8rem; /* Slightly smaller on mobile */
+  }
+}

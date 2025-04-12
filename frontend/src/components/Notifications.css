@@ -1,0 +1,42 @@
+.notifications-container {
+    max-width: 900px;
+    position: relative;
+    top: 50px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 191, 166, 0.1);
+  }
+  
+  .notifications-title {
+    color: #00BFA6;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .notifications-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .notification-item {
+    border-left: 4px solid #00BFA6;
+    padding: 1rem;
+    background-color: #F9F9F9;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .notification-item h3 {
+    color: #263238;
+    margin-bottom: 0.5rem;
+  }
+  
+  .notification-item p {
+    color: #546E7A;
+  }
+  
